@@ -20,20 +20,23 @@ export type Actions = {
     updateTask: (id: string, status: Status) => void
 }
 
-export const useTaskStore = create<State & Actions>()(set) => ({
+export const useTaskStore = create<State & Actions>()(set => ({
   tasks: [],
-  addTask: (title: string, description?: string) => set((state) => ({
+  addTask: (title: string, description?: string) => 
+    set((state) => ({
     tasks: [
         ...state.tasks,
         {id: uuid(), title, description, status: 'TODO'}
     ]
   })),
-  removeTask: (id: string) => set((state) => ({
+  removeTask: (id: string) => 
+    set((state) => ({
     tasks: state.tasks.filter(task => task.id !== id)
   })),
-  updateTask: (id: string, status: Status) => set((state) => ({
-    tasks: state.task.map(task => 
+  updateTask: (id: string, status: Status) => 
+    set((state) => ({
+    tasks: state.tasks.map(task => 
         task.id === id ? {...task, state} : task
     )
   }))
-})
+}))
