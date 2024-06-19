@@ -2,7 +2,7 @@
 
 import { Status, useTaskStore } from '@/lib/store'
 import Task from './task'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 export default function Column({
   title,
@@ -20,6 +20,10 @@ export default function Column({
   const updateTask = useTaskStore(state => state.updateTask)
   const draggedTask = useTaskStore(state => state.draggedTask)
   const dragTask = useTaskStore(state => state.dragTask)
+
+  useEffect(() => {
+    useTaskStore.persist.rehydrate()
+  }, [])
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     if (!draggedTask) return
