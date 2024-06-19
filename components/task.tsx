@@ -1,15 +1,20 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { useTaskStore } from '@/lib/store'
 
 export default function Task({
+  id,
   title,
   description,
   status
 }: {
+  id: string
   title: string
-  description: string
+  description?: string
   status: string
 }) {
+  const dragTask = useTaskStore(state => state.dragTask)
+
   return (
     <div
       className={cn(
@@ -20,6 +25,8 @@ export default function Task({
           'border-2 border-emerald-500': status === 'DONE'
         }
       )}
+      draggable
+      onDrag={() => dragTask(id)}
     >
       <div>
         <h3 className='font-medium text-gray-700'>{title}</h3>
